@@ -26,8 +26,8 @@ let x=1;
 
 function showLightBox(ev){
     
-    console.log(ev.target);
-    console.log(gallery[1]);
+    //console.log(ev.target);
+    //console.log(gallery[1]);
     const lightbox = document.querySelector('.lightbox');
     const img = document.querySelector('.lightbox img');
     const imgUrl = ev.target.src;  
@@ -35,7 +35,7 @@ function showLightBox(ev){
     lightbox.classList.add('visible'); 
     lightbox.addEventListener('click', hideLightbox);
     info = ev.target;
-    console.log(imgUrl);
+    //console.log(imgUrl);
 
     //=======================================
     
@@ -100,9 +100,6 @@ function previous(){
     document.getElementById('ile').innerHTML=x;
     lightbox.addEventListener('click', hideLightbox);
 
-   
-    
-
 }
 
 
@@ -112,19 +109,20 @@ function fnext(){
     
     
     if(info.nextElementSibling == null){
-        console.log('hej');
+        
         const imgURL = gallery[0].src;
         img.src=imgURL;
         info = gallery[0];
         
     }
     else{
-        console.log('idzie');
+        
         const imgUrl = info.nextElementSibling.src; 
         img.src = imgUrl;
         info = info.nextElementSibling;
         lightbox.classList.add('visible');
     }
+
     if(x == gallery.length){
         x = 1;
     }

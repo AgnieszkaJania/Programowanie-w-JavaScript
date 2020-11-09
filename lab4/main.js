@@ -26,6 +26,8 @@ function onNewNote(){
     const title = document.querySelector('#noteTitle').value;
     const content = document.querySelector('#noteContent').value;
     const color = document.querySelector('#choosenColor').value;
+    const data = document.querySelector('#reminder').value;
+    console.log(data);
     let wybTagi = [];
     for(let i = 0; i < tagi.length; i++){
         if(tagi[i].checked == true){
@@ -40,7 +42,8 @@ function onNewNote(){
         colour: color,
         pinned: false,
         createDate: new Date(),
-        tagi: wybTagi
+        tagi: wybTagi,
+        reminderDate: new Date(data)
     };
     notes.push(note);
     
@@ -124,6 +127,24 @@ function createOutput(){
 
 }
 
+function checkforNotifications(){
+    const timestamp = Date.now();
+    
+    const notifies = notes.filter(el => Math.abs(el.reminderDate - timestamp) < 1000);
+    console.log(notifies);
+    if(notifies.length > 0){
+        for (let i = 0; i < notifies.length; i++) {
+            alert('Przypomnienie o notatce \n' + 'Tytuł notatki: \n' + notifies[i].title + '\n' + 'Data utworzenia: \n' + 
+             notifies[i].createDate + '\n' + 'Treść notatki: \n' + notifies[i].content);
+            
+            
+        }
+    }
+}
+
+setInterval(() => {
+    checkforNotifications();
+}, 1000);
 
 function createPinnedNote(ev){
     let x = ev.target.parentElement.id;
@@ -141,50 +162,63 @@ function createPinnedNote(ev){
     }
 
 }
-
+let flg = false;
 function editNote(ev){
-    let title = document.querySelector('#noteTitle');
-    let content = document.querySelector('#noteContent');
-    let color = document.querySelector('#choosenColor');
+    
+    if(flg == false)
+    {
+        flg = true;
+        let title = document.querySelector('#noteTitle');
+        let content = document.querySelector('#noteContent');
+        let color = document.querySelector('#choosenColor');
 
-    let x = ev.target.id;
-    title.value = notes[x].title;
-    content.value = notes[x].content;
-    color.value = notes[x].colour;
-    
-    
-    const submitButton = document.createElement('button');
-    submitButton.innerHTML = 'submit changes';
-    const sect = document.querySelector('section');
-    sect.appendChild(submitButton);
-    submitButton.addEventListener('click', function(){
-        const title = document.querySelector('#noteTitle').value;
-        const content = document.querySelector('#noteContent').value;
-        const color = document.querySelector('#choosenColor').value;
+        let x = ev.target.id;
+        title.value = notes[x].title;
+        content.value = notes[x].content;
+        color.value = notes[x].colour;
         
-        let wybTagi = [];
-        for(let i = 0; i < tagi.length; i++){
-            if(tagi[i].checked == true){
-                wybTagi.push(tagi[i].value);
+    
+    
+        const submitButton = document.createElement('button');
+        submitButton.innerHTML = 'submit changes';
+        const sect = document.querySelector('section');
+        sect.appendChild(submitButton);
+        submitButton.addEventListener('click', function(){
+            const title = document.querySelector('#noteTitle').value;
+            const content = document.querySelector('#noteContent').value;
+            const color = document.querySelector('#choosenColor').value;
+            const data = document.querySelector('#reminder').value;
+        
+            let wybTagi = [];
+            for(let i = 0; i < tagi.length; i++){
+                if(tagi[i].checked == true){
+                    wybTagi.push(tagi[i].value);
+                }
             }
-        }
 
-        console.log(x);
-        const note = {
-            title: title,
-            content: content,
-            colour: color,
-            pinned: notes[x].pinned,
-            createDate: notes[x].createDate,
-            tagi: wybTagi
-        };
-        notes.splice(x, 1, note);
-        //notes.push(note);
-        console.log(x);
-        createLocalStorage();
-        createOutput();
-        document.querySelector('section').removeChild(document.querySelector('section').lastElementChild);
-    });
+            console.log(x);
+            const note = {
+                title: title,
+                content: content,
+                colour: color,
+                pinned: notes[x].pinned,
+                createDate: notes[x].createDate,
+                tagi: wybTagi,
+                reminderDate: new Date(data)
+            };
+            notes.splice(x, 1, note);
+            //notes.push(note);
+            console.log(x);
+            createLocalStorage();
+            createOutput();
+            document.querySelector('section').removeChild(document.querySelector('section').lastElementChild);
+            flg = false;
+        });
+        
+    }
+
+    
+   
     
     
 }

@@ -18,4 +18,4 @@ sounds.Dodaj(snare);
 sounds.Dodaj(tink);
 sounds.Dodaj(tom);
 console.log(boom);
-let playSoundsObj = new playSounds(false);
+let playSoundsObj = new playSounds();

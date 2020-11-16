@@ -1,10 +1,10 @@
-// how to store and save notes in local storage
+//how to store and save notes in local storage
 let isNoteKey = 'notes';
 let convertedNotes;
 let htmlNote;
 let notes = [];
 
-//let Id = 1;
+// let Id = 1;
 // const note = {
 //     title: 'new note',
 //     content: 'simple note',
@@ -17,7 +17,6 @@ let notes = [];
 // notes.push(note);
 // notes.push(note);
 
-//note.toString
 let tagi = document.getElementsByName('Tagi');
 
 function onNewNote(){
@@ -127,24 +126,24 @@ function createOutput(){
 
 }
 
-function checkforNotifications(){
-    const timestamp = Date.now();
+// function checkforNotifications(){
+//     const timestamp = Date.now();
     
-    const notifies = notes.filter(el => Math.abs(el.reminderDate - timestamp) < 1000);
-    console.log(notifies);
-    if(notifies.length > 0){
-        for (let i = 0; i < notifies.length; i++) {
-            alert('Przypomnienie o notatce \n' + 'Tytuł notatki: \n' + notifies[i].title + '\n' + 'Data utworzenia: \n' + 
-             notifies[i].createDate + '\n' + 'Treść notatki: \n' + notifies[i].content);
+//     const notifies = notes.filter(el => Math.abs(el.reminderDate - timestamp) < 1000);
+//     console.log(notifies);
+//     if(notifies.length > 0){
+//         for (let i = 0; i < notifies.length; i++) {
+//             alert('Przypomnienie o notatce \n' + 'Tytuł notatki: \n' + notifies[i].title + '\n' + 'Data utworzenia: \n' + 
+//              notifies[i].createDate + '\n' + 'Treść notatki: \n' + notifies[i].content);
             
             
-        }
-    }
-}
+//         }
+//     }
+// }
 
-setInterval(() => {
-    checkforNotifications();
-}, 1000);
+// setInterval(() => {
+//     checkforNotifications();
+// }, 1000);
 
 function createPinnedNote(ev){
     let x = ev.target.parentElement.id;
@@ -286,4 +285,9 @@ function removeNote(ev) {
 }    
 
 document.querySelector('#newNoteBtn').addEventListener('click',onNewNote);
+//============================================================================
+
+
+
+
 

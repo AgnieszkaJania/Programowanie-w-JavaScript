@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+
 document.body.addEventListener('keypress', onKeyPress);
 document.querySelector('#recordButtonOne').addEventListener('click', recordBtnOne);
 document.querySelector('#recordButtonTwo').addEventListener('click', recordBtnTwo);

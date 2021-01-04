@@ -1,0 +1,13 @@
+.kafelka{
+    
+    background-color: lightblue;
+    text-align: center;
+    margin: 10px;
+    box-shadow: 5px 10px rgba(102, 136, 148, 0.7);
+}
+
+#container{
+    display:flex;
+    justify-content: left;
+}
+

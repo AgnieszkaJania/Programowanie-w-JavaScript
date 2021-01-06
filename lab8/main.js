@@ -1,11 +1,11 @@
 class Note{
-    constructor(city, temp, humidity, clouds, wind, desc){
+    constructor(city){
         this.city = city;
-        this.temp = temp;
-        this.humidity = humidity;
-        this.clouds = clouds;
-        this.wind = wind;
-        this.desc = desc;
+        // this.temp = temp;
+        // this.humidity = humidity;
+        // this.clouds = clouds;
+        // this.wind = wind;
+        // this.desc = desc;
     }
 }
 
@@ -13,7 +13,6 @@ class Note{
 class Dane {
     constructor(){
         this.arr = [];
-        this.cityArr = [];
     }
     AddNote(note){
         this.arr.push(note);
@@ -22,9 +21,6 @@ class Dane {
     getNotes(){ 
         return [...this.arr];
     }
-    AddCity(city){
-        this.cityArr.push(city);
-    } 
     removeNotes(){
         this.arr = [];
     }
@@ -60,6 +56,34 @@ class DownloadWeather{
     
 }
 
+class DownloadForecast{
+    constructor(){
+        this.serverForecast = `http://api.openweathermap.org/data/2.5/forecast?q={City}&lang={Lang}&units=metric&appid={Key}`;
+        this.keyForecast = 'dcd1bd22b28d38df327c7af10fe8e896';
+        this.lang = 'PL';
+    }
+
+    StringConventerForecast(string, object) {
+        for (const key in object) {
+            const value = object[key];
+
+            string = string.replace('{' + key + '}', value);
+        }
+        return string;
+    }
+
+    GetWeatherForecast(name) {
+        const URL =
+            this.StringConventerForecast(this.serverForecast, { City: name, Lang: this.lang, Key: this.keyForecast });
+
+        const promise = fetch(URL);
+        return promise
+            .then((e) => e.json())
+            .catch(e => console.error(e));
+    }
+}
+const weatherDownloadForecast = new DownloadForecast();
+
 const weatherDownload = new DownloadWeather();
 
 class Database{
@@ -94,8 +118,9 @@ class RemoveIcon{
     removePlace(id){
         let cont = document.querySelector('#container');
         const place = document.getElementById(id);
-        
         cont.removeChild(place);
+        // dane.arr = dane.arr.filter(el => el.city != id);
+        // console.log(dane.arr);
     }
 }
 const db = new Database();
@@ -108,62 +133,130 @@ class EventHandlers{
         this.button = document.querySelector('#button');
         this.inputCity = document.querySelector('#city');
         this.container = document.querySelector('#container');
+        this.container1 = document.querySelector('#container1');
         this.button.addEventListener('click', () => this.GetWeather());
+        
         
         
     }
 
     GetWeather(){
         const cityName = this.inputCity.value;
+        let ta = ["Brno"];
+        weatherDownload.GetWeather(cityName).then(this.ShowObj).then(this.SaveCity);
         
-        weatherDownload.GetWeather(cityName).then(this.ShowObj);;
+        weatherDownloadForecast.GetWeatherForecast(cityName).then(this.ShowObjTable);
         
         
+       
+        
+    }
+    SaveCity=(obj)=>{
+        
+        const note = new Note(obj.name);
+        dane.AddNote(note);
+        
+        console.log(dane.arr);
+        db.setItem(dane.arr);
     }
         
     ShowObj=(obj)=>{
         const tmp = new CreateIcon(obj);
         console.log(obj);
         this.container.appendChild(tmp.box);
-        const note = new Note(obj.name, obj.main.temp, obj.main.humidity, obj.clouds.all, obj.wind.speed, obj.weather[0].description);
-        console.log(note);
-        dane.AddNote(note);
-        
-        console.log(dane.arr);
-        db.setItem(dane.arr);
-        
-       
+        return obj;
+    }
+
+    ShowObjTable=(obj)=>{
+        const tmp = new CreateTable(obj);
+        this.container1.appendChild(tmp.table);
+
     }
 
 }
 const eventHandler = new EventHandlers();
-
-setInterval(()=> {
-
-    dane.cityArr = [];
-    for(let i = 0; i < dane.arr.length; i ++){
+    
+// setInterval(()=>{
+//     const container = document.querySelector('#container');
+//     const container1 = document.querySelector('#container1');
+//     let elementy = document.querySelectorAll('.kafelka');
+//     let elementy1 = document.querySelectorAll('.tabelka');
+//     console.log(elementy);
+//     for(let i = 0; i < elementy.length; i++){
+//         container.removeChild(elementy[i]);
+//     }
+//     for(let i = 0; i < elementy1.length; i++){
+//         container1.removeChild(elementy1[i]);
+//     }
+   
+//     for(let i = 0; i < dane.arr.length; i++){
         
-        dane.cityArr.push(dane.arr[i].city);
-    }
-    console.log(dane.cityArr);
-    dane.removeNotes();
-    db.removeItems();
-    console.log(dane.cityArr.length);
-    
-    for(let i = 0; i < dane.cityArr.length; i++){
-        console.log(dane.cityArr[i]);
-        ri.removePlace(dane.cityArr[i]);
-    }
-
-    for(let i = 0; i < dane.cityArr.length; i++){
-        weatherDownload.GetWeather(dane.cityArr[i]).then(eventHandler.ShowObj);
-    }
-
+//         let s = dane.arr[i].city;
+//         weatherDownload.GetWeather(s).then(eventHandler.ShowObj);
+        
+//         weatherDownloadForecast.GetWeatherForecast(s).then(eventHandler.ShowObjTable);
+        
+//     }
     
 
-}, 120000)
+// }, 120000)
 
 
+class CreateTable{
+    constructor(Obj){
+        this.table = document.createElement('div');
+        this.table.className = 'tabelka';
+        this.tab = document.createElement('table');
+        this.place = document.createElement('tr');
+        this.place.innerHTML = Obj.city.name + ' - prognoza pogody';
+        this.title = document.createElement('tr');
+        this.colDateTime = document.createElement('th');
+        this.colDateTime.innerHTML = 'Czas';
+        this.colTemp = document.createElement('th');
+        this.colTemp.innerHTML = 'Temperatura';
+        this.colHumidity = document.createElement('th');
+        this.colHumidity.innerHTML = 'Humidity';
+        this.colClouds = document.createElement('th');
+        this.colClouds.innerHTML = 'Clouds';
+        this.colWind = document.createElement('th');
+        this.colWind.innerHTML = 'Wind';
+        this.tab.appendChild(this.place);
+        this.title.appendChild(this.colDateTime);
+        this.title.appendChild(this.colTemp);
+        this.title.appendChild(this.colHumidity);
+        this.title.appendChild(this.colClouds);
+        this.title.appendChild(this.colWind);
+        this.tab.appendChild(this.title);
+        
+        for(let i = 0; i < 12; i++){
+            
+            this.row = document.createElement('tr');
+            var daneCzas = document.createElement('td');
+            daneCzas.innerHTML = Obj.list[i].dt_txt;
+            var daneTemp = document.createElement('td');
+            daneTemp.innerHTML = Obj.list[i].main.temp;
+            var daneHumidity = document.createElement('td');
+            daneHumidity.innerHTML = Obj.list[i].main.humidity;
+            var daneClouds = document.createElement('td');
+            daneClouds.innerHTML = Obj.list[i].clouds.all;
+            var daneWind = document.createElement('td');
+            daneWind.innerHTML = Obj.list[i].wind.speed;
+            
+            this.row.appendChild(daneCzas);
+            this.row.appendChild(daneTemp);
+            this.row.appendChild(daneHumidity);
+            this.row.appendChild(daneClouds);
+            this.row.appendChild(daneWind);
+
+            this.tab.appendChild(this.row); 
+
+        }
+        this.table.appendChild(this.tab);
+        console.log(Obj);
+        console.log(Obj.list[0].main.temp);
+
+    }
+}
 
 
 
@@ -173,7 +266,7 @@ class CreateIcon {
         console.log(Obj.temp);
         this.box = document.createElement('div');
         this.box.className = 'kafelka';
-        this.box.id = Obj.name;
+        //this.box.id = Obj.name;
         this.nameC = document.createElement('div');
         this.tempC = document.createElement('div');
         this.humidityC = document.createElement('div');

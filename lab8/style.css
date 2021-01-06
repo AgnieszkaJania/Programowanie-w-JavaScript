@@ -1,13 +1,34 @@
+body{
+    background-color: cadetblue;
+    text-align: center;
+    
+}
+
 .kafelka{
     
     background-color: lightblue;
-    text-align: center;
     margin: 10px;
     box-shadow: 5px 10px rgba(102, 136, 148, 0.7);
+    max-width: 20%;
 }
 
-#container{
+
+main{
     display:flex;
-    justify-content: left;
+    flex-direction: column;
+    text-align: center;
+    
 }
 
+#city{
+    background-color: beige;
+    padding: 10px;
+}
+ th, td {
+    border-bottom: 2px solid black;
+    
+}
+
+tr:hover{
+    background-color: grey;
+}

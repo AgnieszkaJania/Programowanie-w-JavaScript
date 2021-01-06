@@ -142,7 +142,6 @@ class EventHandlers{
 
     GetWeather(){
         const cityName = this.inputCity.value;
-        let ta = ["Brno"];
         weatherDownload.GetWeather(cityName).then(this.ShowObj).then(this.SaveCity);
         
         weatherDownloadForecast.GetWeatherForecast(cityName).then(this.ShowObjTable);
@@ -295,9 +294,6 @@ class CreateIcon {
         this.box.addEventListener('dblclick', function(){
             ri.removePlace(Obj.name);
         });
-        
-        
-       
           
     }
 }

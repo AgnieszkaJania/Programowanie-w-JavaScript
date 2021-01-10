@@ -1,3 +1,7 @@
+import {Sound} from './klasy-soundKit.js';
+import {Sounds} from './klasy-soundKit.js';
+import {playSounds} from './klasy-soundKit.js';
+
 let boom = new Sound('Boom', 'boom', 'sounds/boom.wav');
 let clap = new Sound('Clap','clap','sounds/clap.wav');
 let hihat = new Sound('Hihat','hihat','sounds/hihat.wav');

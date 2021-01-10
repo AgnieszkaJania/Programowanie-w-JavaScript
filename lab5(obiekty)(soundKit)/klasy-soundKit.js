@@ -271,3 +271,7 @@ class RecordSounds{
         }
     }   
 }
+
+export{Sounds};
+export{Sound};
+export{playSounds};

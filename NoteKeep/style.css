@@ -1,0 +1,58 @@
+body{
+    box-sizing: border-box;
+}
+button{
+    display:block;
+}
+#pinned{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px 0;
+}
+.pinned{
+    background-color: khaki;
+}
+
+section{
+    border: 2px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: rgb(238, 180, 228);
+}
+
+div.notes{
+    border: 2px solid black;
+    box-shadow: 10px 10px 5px grey;
+    text-align: justify;
+    max-width: 300px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+
+}
+
+main{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+.green{
+    box-shadow: 10px 10px 5px grey;
+    text-align: justify;
+    max-width: 300px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    border: 5px dotted blue;
+}

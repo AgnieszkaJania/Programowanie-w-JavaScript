@@ -1,5 +1,5 @@
 body{
-    background-color: cadetblue;
+    background-color: rgb(221, 197, 226);
     text-align: center;
     
 }
@@ -25,10 +25,14 @@ main{
     padding: 10px;
 }
  th, td {
-    border-bottom: 2px solid black;
+    border: 2px solid black;
     
 }
 
 tr:hover{
     background-color: grey;
+}
+#container, #container1{
+    display:flex;
+    justify-content: center;
 }

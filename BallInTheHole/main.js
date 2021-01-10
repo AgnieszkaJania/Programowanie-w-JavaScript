@@ -7,6 +7,7 @@ let hole = {
     y: 0
 };
 
+
 let distance;
 let ann = document.querySelector('.announcement');
 let content = document.querySelector('.container');

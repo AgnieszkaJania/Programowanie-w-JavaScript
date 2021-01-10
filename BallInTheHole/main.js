@@ -20,6 +20,17 @@ ball.x = Math.random() * window.innerWidth;
 ball.y = Math.random() * window.innerHeight;
 kulkaKsztalt.setAttribute('cx', ball.x);
 kulkaKsztalt.setAttribute('cy', ball.y);
+
+let colors = 0;
+setInterval(() =>{
+    var tabColors = ['blue','red','yellow','green','violet','orange','grey','pink'];
+    kulkaKsztalt.setAttribute('fill',tabColors[colors]);
+    if(colors == 7){
+        colors = 0;
+    }
+    colors++;
+},200);
+
 console.log(ball.x + ',' + ball.y);
 
 

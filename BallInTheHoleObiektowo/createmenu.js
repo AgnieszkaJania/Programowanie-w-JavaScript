@@ -1,28 +1,28 @@
 let timeValue; 
 export default class CreateMenu{
     
-    // DisplayNextLevel() {
-    //     let ann = document.querySelector('.announcement');
-    //     let content = document.querySelector('.content');
-    //     let guzik = document.createElement('button');
+    DisplayNextLevel() {
+        let ann = document.querySelector('.announcement');
+        let content = document.querySelector('.content');
+        let guzik = document.createElement('button');
         
-    //     ann.classList.add('visible');
-    //     guzik.innerHTML='Ok';
-    //     this.content.innerHTML = 'Kolejna runda';
-    //     ann.appendChild(guzik);
+        ann.classList.add('visible');
+        guzik.innerHTML='Ok';
+        content.innerHTML = 'Kolejna runda';
+        ann.appendChild(guzik);
         
-    //     guzik.addEventListener('click', function(){
-    //         ann.classList.remove('visible');
-    //         ann.removeChild(guzik);
-    //     });
-    // }
+        guzik.addEventListener('click', function(){
+            ann.classList.remove('visible');
+            ann.removeChild(guzik);
+        });
+    }
     
     DisplyStart(){
         let ann = document.querySelector('.announcement');
         let content = document.querySelector('.content');       
         
         ann.classList.add('visible');
-        console.log('hello');
+        
         let guzik = document.createElement('button');
         guzik.innerHTML='Ok';
         content.innerHTML = 'Zaczynamy gre?';
